@@ -75,7 +75,6 @@ Redis es un sistema de almacenamiento en memoria de código abierto que se utili
 </ul>
 
 </div>
-<br>
 <hr>
 
 # ¿Cómo funciona Redis? 
