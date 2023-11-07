@@ -5,12 +5,14 @@
 - [Introduccion](#Intro)
   -  [¿Qué es redis?](#que)
   -  [¿Para qué se usa?](#para_que)
+  -  [Ventajas de usar Redis](#ventajas)
+  -  [Desventajas de usar Redis:](#desventajas)
 - [Page 2](#page2)
 - [Page 3](#page3)
 
 <hr>
 
-# <u> Para empezar</u>
+# Para empezar
 
 
 ## ¿Qué es redis? 
@@ -28,15 +30,57 @@ Redis es un sistema de almacenamiento en memoria de código abierto que se utili
 
 <br>
   <ul> 
-    <li>Caché de datos: Redis es ampliamente utilizado como una capa de caché de datos en aplicaciones web y sistemas en general.</li>
+    <li><u>Caché de datos</u>: Redis es ampliamente utilizado como una capa de caché de datos en aplicaciones web y sistemas en general.</li>
     <br>
-    <li>Cola de mensajes: Redis se usa para implementar colas de mensajes en sistemas que requieren el procesamiento de tareas en segundo plano o el encolamiento de trabajos.  </li>
+    <li><u>Cola de mensajes</u>: Redis se usa para implementar colas de mensajes en sistemas que requieren el procesamiento de tareas en segundo plano o el encolamiento de trabajos.  </li>
     <br>
-    <li> Sesiones de usuario: Redis es una elección común para almacenar sesiones de usuario en aplicaciones web, ya que es rápido y escalable.</li>
+    <li><u>Sesiones de usuario</u>: Redis es una elección común para almacenar sesiones de usuario en aplicaciones web, ya que es rápido y escalable.</li>
     <br>
-    <li>Sistemas de geoespacial: Redis admite estructuras de datos geoespaciales que permiten realizar consultas y cálculos basados en la ubicación, lo que es útil en aplicaciones de seguimiento de ubicación y mapeo. </li>
+    <li><u>Sistemas de geoespacial</u>: Redis admite estructuras de datos geoespaciales que permiten realizar consultas y cálculos basados en la ubicación, lo que es útil en aplicaciones de seguimiento de ubicación y mapeo. </li>
   </ul>
+<br>
 
+## Ventajas y desventajas:
+
+<div style="background-color: rgb(187, 233, 187); padding: 20px;">
+<h3><u>Ventajas de usar Redis</u>:</h3>
+
+- Redis es muy rápido y puede realizar alrededor de 110,000 operaciones SET por segundo y alrededor de 81,000 operaciones GET por segundo.
+<br>
+<br>
+- Redis admite una amplia variedad de tipos de datos, como listas, conjuntos y tablas hash, lo que facilita la resolución de diversos problemas. Su versatilidad ayuda a elegir el tipo de dato adecuado para cada situación.
+<br>
+<br>
+- Todas las operaciones en Redis son atómicas, lo que garantiza que si dos clientes acceden concurrentemente, el servidor Redis recibirá el valor actualizado.
+<br>
+<br>
+- Redis es versátil y puede usarse en múltiples casos, como caché, colas de mensajes y sesiones de aplicaciones web, entre otros. También admite Publicar/Suscribir para aplicaciones de mensajería.
+</div>
+<br>
+
+
+
+<div style="background-color: rgb(241, 175, 175); padding: 20px;">
+<h3><u>Desventajas de usar Redis</u>:</h3>
+
+- Redis almacena datos en memoria, por lo que su capacidad está limitada por la RAM del servidor, lo que puede ser un desafío para aplicaciones con grandes volúmenes de datos.
+<br>
+<br>
+- Redis puede perder datos al reiniciar si la persistencia no se configura adecuadamente, por lo que es importante tomar medidas como snapshots o registros de cambios para evitar esta pérdida.
+<br>
+<br>
+- La configuración y administración de Redis pueden ser complejas, especialmente en entornos de alta disponibilidad y escalabilidad, donde la configuración de clústeres o alta disponibilidad puede ser desafiante.
+<br>
+<br>
+- Redis carece de soporte para consultas avanzadas o búsquedas basadas en contenido, ya que se centra en recuperar datos mediante claves, a diferencia de las bases de datos relacionales.
+<br>
+<br>
+- A medida que los datos aumentan, la RAM requerida para Redis también aumenta, lo que puede resultar en costos más altos para hardware y recursos. 
+<br>
+<br>
+- Si se requiere persistencia en disco, las operaciones de escritura pueden ser costosas en términos de rendimiento, ya que Redis debe sincronizar los datos en memoria con el almacenamiento en disco.
+</div>
+<br>
 <hr>
 
 # ¿Cómo funciona Redis? 
