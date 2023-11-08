@@ -269,6 +269,195 @@ Ejemplo:
   Estas operaciones son fundamentales para garantizar la consistencia de los datos en Redis en entornos de concurrencia. Puedes utilizar estas operaciones para realizar cambios en los datos de manera segura y sin preocuparte por conflictos
 </div>
 
+
+
+
+## Comandos basicos y funciones:
+
+<div style= "padding: 10px" >
+<div style="background-color: green; padding: 10px; color:white" >
+  <p>SET a key para tener algo adentro</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> Set alumno Alejo</p>
+<p>Ok</p>
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>GET obtener el valor de una key</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> get alumno
+</p>
+<p>"Alejo"</p>
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>Del eliminar el valor de una key</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> Del key alumno </p>
+<p>(integer) 1</p>
+  <p>127.0.0.1:6379> get alumno </p>
+<p>(nil)</p>
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>HSET: establece el campo en un hash almacenado en la clave con el valor.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> hset user:maruuu name "Alejo Diaz"</p>
+<p>(integer) 1</p>
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>HGET: Obtiene el valor asociado al campo en un hash.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> hget user:maruuu name</p>
+<p>"Alejo Diaz"</p>
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>LPUSH: inserta todos los valores especificados al principio de la lista almacenada en la clave.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> lpush comidas "pizza" "lomito" "milanesa"</p>
+<p>(integer) 3</p>
+</div>
+</div>
+
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>LRANGE: obtiene una variedad de elementos de una lista.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>lrange comidas 0 -1</p>
+<p>1) "milanesa"</p>
+<p>2) "lomito"</p>
+<p>3) "pizza"</p>
+<p>127.0.0.1:6379> lrange comidas 1 -1</p>
+<p>1) "lomito"</p>
+<p>2) "pizza"</p>
+<p>127.0.0.1:6379> lrange comidas 2 -1</p>
+<p>1) "pizza"</p>
+<p>127.0.0.1:6379> lrange comidas 3 -1</p>
+<p>(empty list or set)</p>
+
+</div>
+</div>
+
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>SADD: Agregar uno o más miembros a un conjunto</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> sadd bebidas "coca" "pepsi" "sprite"</p>
+<p>(integer) 3</p>
+</div>
+</div>
+
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>SMEMBERS: Get all the members of a set.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> smembers bebidas</p>
+<p>1) "coca"</p>
+<p>2) "sprite"</p>
+<p>3) "pepsi"</p>
+</div>
+</div>
+
+
+
+##  Prototipo mercado 
+
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>ZADD: agrega uno o más miembros a un conjunto ordenado.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> zadd Mercado 750 "coca" 500 "paps" 800 "fernet"</p>
+<p>(integer) 3</p>
+</div>
+</div>
+
+
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>ZRANGE: obtiene una variedad de elementos de un conjunto ordenado.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> zrange Mercado 0 -1 </p>
+<p>1) "paps"</p>
+<p>2) "coca"</p>
+<p>3) "fernet"</p>
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p> ZRANGE + WHITSCORES: obtiene una variedad de elementos de un conjunto ordenado + los valores asignados.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> zrange Mercado 0 -1 withscores</p>
+<p>1) "paps"</p>
+<p>2) "500"</p>
+<p>3) "coca"</p>
+<p>4) "750"</p>
+<p>5) "fernet"</p>
+<p>6) "800"</p>
+
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>ZRANGE + WHITSCORES: obtiene una variedad de elementos de un conjunto ordenado + los valores asignados.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> zrange Mercado 0 -1 withscores</p>
+<p>1) "paps"</p>
+<p>2) "500"</p>
+<p>3) "coca"</p>
+<p>4) "750"</p>
+<p>5) "fernet"</p>
+<p>6) "800"</p>
+
+</div>
+</div>
+
+<div style= "padding: 10px">
+<div style="background-color: green; padding: 10px; color:white">
+  <p>ZRANGEBYSCORE se utiliza para obtener elementos dentro de un rango de puntuaciones en un conjunto ordenado.</p>
+</div>
+<div style="background-color: rgb(5, 17, 20); padding: 10px; color:rgb(30, 95, 116)">
+  <p>127.0.0.1:6379> zrangebyscore Mercado (730 +inf</p>
+<p>1) "coca"</p>
+<p>2) "fernet"</p>
+<p>127.0.0.1:6379> zrangebyscore Mercado (730 770</p>
+<p>1) "coca"</p>
+</div>
+</div>
+
+
+
 <hr>
 
 # Instalacion de Redis:
