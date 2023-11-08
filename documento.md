@@ -2,7 +2,7 @@
 
 <hr>
 
-## Grupo 4 
+## Grupo 4 - Documento sobre Redis
 
 ### Integrantes
 - Maximo Blazquez
