@@ -2,7 +2,7 @@
 
 <hr>
 
-## Grupo 4 
+## Grupo 4 - Documento sobre Redis
 
 ### Integrantes
 - Maximo Blazquez
@@ -12,6 +12,11 @@
 - Agustin Odetti
 - Alejo Diaz Broilo
 <br>
+
+### profesores
+
+- Teodoro Reyna
+- Juan Frattin
 <hr>
 
 ## Indice
@@ -19,10 +24,25 @@
 - [Introduccion](#Intro)
   -  [¿Qué es redis?](#que)
   -  [¿Para qué se usa?](#para_que)
-  -  [Ventajas de usar Redis](#ventajas)
-  -  [Desventajas de usar Redis:](#desventajas)
-- [Page 2](#page2)
-- [Page 3](#page3)
+  -  [ventajas y desventajas](#ventajas)
+  -  [¿Quienes usan Redis?](#quienes)
+- [¿Como funciona Redis?](#como)
+  -  [Fundamentos Basicos](#basicos)
+  -  [Escalabilidad](#escalabilidad)
+  -  [Operaciones Atomicas en Redis](#atomicas)
+-  [Intalacion de Redis](#instalacion)
+   - [Linux](#linux)
+   - [Windows](#windows)
+-  [Conexión a Redis](#conexion)
+-  [Ejemplios de conexiones en distintos lenguajes](#conexion_lenguajes)
+   -  [Python](#python)
+   -  [JavaScript](#javascript)
+-  [Tipos de datos en redis](#tipos_datos)
+
+
+
+
+
 
 <hr>
 
@@ -149,15 +169,19 @@ Redis es una base de datos en memoria que funciona almacenando datos en la RAM p
     <li>
     El bucle de eventos de Redis, también conocido como bucle principal, comienza a ejecutarse. Este bucle consta de dos fases principales: una fase de espera de eventos y una fase de procesamiento de eventos.
     </li>
+    <br>
     <li>
     El bucle de eventos se bloquea y espera a que ocurran eventos en las conexiones de clientes, como datos disponibles para lectura o capacidad de escritura en los sockets.
     </li>
+    <br>
     <li>
     Una vez que ocurre un evento, el bucle de eventos desbloquea y procesa el evento. Puede ser una solicitud de cliente para escribir datos, una solicitud para leer datos o incluso un nuevo cliente que intenta conectarse.  La clave del multiplexing en Redis es que las operaciones de lectura y escritura en las conexiones se realizan de manera no bloqueante. Esto significa que el hilo no se bloquea esperando una operación de E/S para completarse, el hilo pasa a la siguiente conexión para atender otros eventos.
     </li>
+    <br>
     <li>
     Cuando se realiza una solicitud, Redis procesa la solicitud y envía la respuesta al cliente. Esto puede incluir la recuperación de datos, actualizaciones en la base de datos en memoria de Redis, o cualquier otra operación específica del cliente.
     </li>
+    <br>
     <li>
     Una vez que se ha atendido un evento, el bucle de eventos repite el proceso de espera y procesamiento, manejando múltiples conexiones de forma concurrente.
     </li>
@@ -166,14 +190,273 @@ Redis es una base de datos en memoria que funciona almacenando datos en la RAM p
   
   </ul>
   </li>
-</ul>
-<div style="background-color: lightgray; padding: 20px;">
+  <br>
+  <div style="background-color: lightgray; padding: 20px;">
   Una cosa a tener en cuenta del “single threading” es que no se explota toda la potencia del procesador, por lo que es práctica común el tener varias instancias de redis siendo procesadas en distintos núcleos.
+</div>
+<br>
+<li>
+Estructura de data eficiente:
+<ul>
+  <li>
+  Debido a que redis es una base de datos almacenada en la memoria este se puede aprovechar de varias “low-level” estructuras de datos sin tener que preocuparnos de pasarlas al disco de manera eficiente (como los datos están almacenados en la memoria, no se tiene que tener las mismas consideraciones que con el disco). algunos ejemplos de estas estructuras serían:
+  </li>
+</ul>
+</li>
+</ul>
 
+## Escalabilidad:
+<br>
+
+La escalabilidad en el contexto de Redis se refiere a la capacidad de esta base de datos para manejar un aumento en la carga de trabajo o en la cantidad de datos que necesita gestionar, sin que eso afecte negativamente su rendimiento o su disponibilidad. Esto se logra mediante la posibilidad de agregar más recursos (como servidores) para distribuir la carga, lo que se conoce como escalabilidad horizontal.
+
+<br>
+En casos de aumento considerable de trafico, en lugar de intentar hacer que un solo servidor Redis haga todo el trabajo, puedes optar por escalar Redis horizontalmente.
+
+<br>
+Para hacerlo, se puede agregar más servidores Redis a tu entorno. Estos nuevos servidores trabajan en conjunto y distribuyen la carga de manera equitativa. Cada servidor maneja una parte de los productos o datos, y cuando un usuario realiza una solicitud, puede dirigirse a cualquiera de los servidores. Esto distribuye la carga de manera uniforme y garantiza que cada servidor Redis pueda responder rápidamente a las solicitudes.
+
+<br>
+
+## Operaciones Atómicas en Redis:
+
+Las operaciones atómicas en Redis son operaciones que se realizan de manera indivisible e inmutable, lo que significa que no se pueden dividir en pasos más pequeños y garantizan que se ejecutarán completamente o no se ejecutarán en absoluto. Redis proporciona una serie de operaciones atómicas que son esenciales para garantizar la consistencia de los datos en entornos de concurrencia.
+
+<ol>
+<li>
+<b>SET</b>: La operación <b>SET</b> se utiliza para establecer el valor de una clave en Redis. Es una operación atómica en el sentido de que reemplaza el valor existente de la clave con el nuevo valor proporcionado. Si la clave ya existe, el valor anterior se sobrescribe por completo.
+Ejemplo:
+
+</li>
+<br>
+<li>
+<b>GETSET</b>: La operación <b>GETSET</b> se utiliza para establecer un nuevo valor y obtener el valor anterior de una clave en una sola operación. Esto es útil cuando necesitas actualizar una clave y, al mismo tiempo, obtener el valor anterior.</li>
+<br>
+<li>
+<b>INCR</b> e <b>INCRBY</b>: Las operaciones <b>INCR</b> e <b>INCRBY</b> se utilizan para incrementar el valor de una clave numérica en 1 o una cantidad específica, respectivamente. Estas operaciones son atómicas y garantizan que el valor se incremente sin posibles condiciones de carrera.
+</li>
+<br>
+<li>
+<b>DECR</b> y <b>DECRBY</b>: Estas operaciones son similares a <b>INCR</b> e <b>INCRBY</b>, pero disminuyen el valor en lugar de aumentarlo.
+</li>
+<br>
+<li>
+<b>APPEND</b>: La operación <b>APPEND</b> se utiliza para concatenar un valor a una clave de tipo cadena. Es una operación atómica que garantiza que la cadena se modifique sin problemas.
+</li>
+<br>
+<li>
+<b>HSET</b>: La operación <b>HSET</b> se utiliza para establecer el valor de un campo en un hash. Es una operación atómica que modifica o crea el campo en el hash.
+</li>
+<br>
+<li>
+<b>LPUSH</b> y <b>RPUSH</b>: Las operaciones <b>LPUSH</b> y <b>RPUSH</b> se utilizan para agregar un elemento al principio (izquierda) o al final (derecha) de una lista, respectivamente. Son operaciones atómicas que garantizan la integridad de la lista.
+</li>
+<br>
+<li>
+<b>SADD</b> y <b>SREM</b>: Las operaciones <b>SADD</b> y <b>SREM</b> se utilizan para agregar o eliminar miembros de un conjunto. Son operaciones atómicas que modifican el conjunto de manera segura.
+</li>
+<br>
+<li>
+<b>ZADD</b> y <b>ZREM</b>: Las operaciones <b>ZADD</b> y <b>ZREM</b> se utilizan para agregar o eliminar elementos de un conjunto ordenado. Al igual que con otros tipos de conjuntos, estas operaciones son atómicas.
+</li>
+<br>
+<li>
+<b>BITOP</b>: La operación <b>BITOP</b> se utiliza para realizar operaciones a nivel de bits en cadenas binarias. A pesar de su naturaleza de operación de bits, es una operación atómica.
+</li>
+</ol>
+<br>
+<div style="background-color: lightgray; padding: 20px;">
+  Estas operaciones son fundamentales para garantizar la consistencia de los datos en Redis en entornos de concurrencia. Puedes utilizar estas operaciones para realizar cambios en los datos de manera segura y sin preocuparte por conflictos
 </div>
 
-## algo mas
+<hr>
 
-<div style="background-color: lightblue; padding: 20px;">
-  <p>Section with a light blue background.</p>
-</div>
+# Instalacion de Redis:
+
+## Linux
+
+Se puede instalar versiones estables recientes de Redis desde el repositorio APT oficial packages.redis.io.
+
+Si estás ejecutando una distribución mínima (como un Docker), es posible que primero necesite instalar lsb-release, curl y gpg:
+
+- sudo apt install lsb-release curl gpg
+
+Agregue el repositorio al apt index, actualícelo y luego instale:
+
+- curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+- echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+- sudo apt-get update
+- sudo apt-get install redis
+
+En linux tambien podes instalar redis vía Snapcraft:
+
+- sudo snap install redis
+
+Si no tenesSnapcraft lo podes instalar desde el siguiente link:
+https://snapcraft.io/snapcraft
+
+
+## Windows:
+
+En windows es más complicado ya que no es compatible, para poder tenerlo en windows tenes que descargar WSL2 (Windows Subsystem for Linux). WSL2 como dice el nombre básicamente te permite abrir la consola de linux. 
+
+
+Una vez que tenemos WSL2 funcionando lo instalamos de la misma manera que en linux.
+
+<hr>
+
+# Conexion a redis:
+
+## Selección del Cliente:
+<ul>
+En primer lugar, debes seleccionar un cliente Redis adecuado para tu lenguaje de programación. Redis tiene una amplia variedad de clientes disponibles, lo que facilita la integración con tu aplicación.
+</ul>
+
+## Configuración de la Conexión:
+
+<ul>
+Debes configurar los parámetros de conexión, como la dirección IP o el nombre de host del servidor Redis y el número de puerto en el que se está ejecutando Redis. Además, si tu servidor Redis requiere autenticación, debes proporcionar las credenciales necesarias.
+</ul>
+
+## Inicialización del Cliente:
+
+<ul>
+Crear una instancia del cliente Redis en tu aplicación es el siguiente paso. Esto se hace utilizando las funciones o clases proporcionadas por la biblioteca del cliente Redis en tu lenguaje.
+</ul>
+
+## Establecer la Conexión:
+
+<ul>
+Una vez que se ha creado la instancia del cliente, debes establecer la conexión con el servidor Redis. Esto implica que el cliente abrirá una conexión de red con el servidor y estará listo para enviar comandos.
+</ul>
+
+## Enviar Comandos y Recibir Respuestas:
+
+<ul>
+Con la conexión establecida, puedes enviar comandos Redis al servidor utilizando el cliente. Los comandos incluyen operaciones como SET, GET, HSET, LPUSH, etc. Cada comando tiene una función específica en Redis. Cuando envías un comando, el cliente lo traduce a la forma adecuada para comunicarse con Redis a través del protocolo de Redis. El servidor Redis procesa el comando y envía una respuesta al cliente.
+</ul>
+
+## Recibir y Procesar Respuestas:
+
+<ul>
+Las respuestas del servidor Redis son procesadas por el cliente y se devuelven a tu aplicación. Las respuestas pueden ser valores simples, estructuras de datos o información de estado. Tu aplicación procesa estas respuestas según sea necesario.
+</ul>
+
+## Cerrar la Conexión
+
+<ul>
+Una vez que hayas terminado de interactuar con Redis, es una buena práctica cerrar la conexión al servidor para liberar recursos y mantener la integridad de la conexión.
+</ul>
+
+<hr>
+
+# Ejemplos de conexiones en distintos lenguajes
+
+## Python
+
+Para inicializar una conexión en Python, debes usar el cliente Redis `redis-py`. Asegúrate de que primero hayas instalado el cliente usando pip (`pip install redis`).
+
+- import redis
+
+Configura la conexión a Redis
+
+- redis_host = 'localhost'  # Host o dirección IP del servidor Redis
+
+- redis_port = 6379  # Puerto en el que Redis está escuchando
+
+- redis_password = None  # Contraseña (si es necesario)
+
+Inicializa el cliente Redis
+
+- redis_client = redis_client = redis.StrictRedis(host=redis_host, port=redis_port, password=redis_password) 
+
+Ahora puedes usar redis_client para enviar comandos a Redis
+
+## JavaScript (Node.js) - Usando `ioredis`:
+
+Para inicializar una conexión en Node.js, puedes utilizar el cliente Redis `ioredis`. Asegúrate de que primero hayas instalado el cliente usando npm (`npm install ioredis`).
+
+- const Redis = require('ioredis');
+
+Configura la conexión a Redis
+
+- const redisHost = 'localhost';
+- const redisPort = 6379;
+- const redisPassword = null; // Contraseña (si es necesario)
+
+Inicializa el cliente Redis
+
+- const redisClient = new Redis({
+    host: redisHost,
+    port: redisPort,
+    password: redisPassword,
+});
+
+Ahora puedes usar redisClient para enviar comandos a Redis.
+
+<hr>
+
+# Tipos de datos en Redis
+
+Redis es conocido por su flexibilidad en cuanto a las estructuras de datos que ofrece. A diferencia de otros sistemas de almacenamiento de clave-valor más simples, Redis proporciona una variedad de tipos de datos que permiten a los desarrolladores abordar una amplia gama de problemas y aplicaciones.
+
+<ul>
+<b>Cadenas</b>: Puedes almacenar datos de texto o binarios de hasta 512 MB de tamaño en cadenas. Esto es útil para una amplia variedad de casos de uso, desde simples valores clave hasta datos más complejos.
+
+- SET miClave "Hola, Redis"
+- GET miClave
+
+<br>
+
+<b>Listas</b>: Las listas son colecciones de cadenas que se mantienen en el orden en que se agregaron. Esto es útil para implementar estructuras de datos como colas y pilas.
+
+- LPUSH miLista "Manzana" "Banana" "Cereza"
+
+- LRANGE miLista 0 - 1
+
+<b>Conjuntos</b>: Los conjuntos son colecciones desordenadas de cadenas, y permiten operaciones como intersección, unión y diferencia con otros conjuntos.
+
+- SADD miConjunto "Rojo" "Verde" "Azul"
+- SISMEMBER miConjunto "Rojo"
+
+<br>
+<b>Conjuntos ordenados</b>: Estos son conjuntos en los que cada elemento está asociado con un valor (puntuación) y se mantienen ordenados por ese valor. Esto es útil para implementar clasificaciones y rangos.
+
+- ZADD miConjuntoOrdenado 10 "Manzana" 5 "Banana" 8 "Cereza"
+- ZRANGE miConjuntoOrdenado 0 -1
+
+<br>
+<b>Hashes</b>: Los hashes son estructuras de datos que almacenan una lista de campos y valores asociados. Son útiles para representar objetos o registros con múltiples atributos.
+
+- HSET miHash Nombre "Juan" Edad 30 Ciudad "Nueva York"
+
+- HGET miHash Nombre
+
+<b>Mapas de bits</b>: Este tipo de datos permite realizar operaciones a nivel de bits, lo como establecer, borrar o contar bits individuales en una cadena de bits. Esto es útil para ciertos casos de uso que requieren manipulación a nivel de bits.
+
+- SETBIT miMapaDeBits 5 1
+- BITCOUNT miMapaDeBits
+
+<br>
+
+<b>HyperLogLogs</b>: Son estructuras de datos probabilísticas que se utilizan para estimar la cardinalidad de un conjunto, es decir, cuántos elementos únicos hay en un conjunto de datos. Son útiles para contar elementos únicos en grandes conjuntos de datos.
+
+- PFADD miHyperLogLog "Elemento1" "Elemento2" "Elemento3"
+- PFCOUNT miHyperLogLog
+
+<br>
+
+<b>Secuencias</b>(Streams): Las secuencias son estructuras de datos de registro que se utilizan para implementar colas de mensajes. Son útiles en escenarios donde se necesita un procesamiento en tiempo real de eventos secuenciales.
+
+- XADD miSecuencia * Nombre "Juan" Edad 30
+- XREAD COUNT 1 BLOCK 0 STREAMS miSecuencia 0
+
+<br>
+<b>Geoespacial</b>: Redis admite mapas de entradas basados en longitud y latitud, lo que es útil en aplicaciones de geolocalización, seguimiento de ubicación y mapeo.
+
+
+- GEOADD miMapaGeoespacial 13.361389 38.115556 "CiudadA" 15.087269 37.502669 "CiudadB"
+- GEORADIUS miMapaGeoespacial 15 37 100 km
+</ul>
