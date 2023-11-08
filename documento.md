@@ -185,8 +185,114 @@ Estructura de data eficiente:
 </li>
 </ul>
 
+## Escalabilidad:
+<br>
 
-## algo mas
+La escalabilidad en el contexto de Redis se refiere a la capacidad de esta base de datos para manejar un aumento en la carga de trabajo o en la cantidad de datos que necesita gestionar, sin que eso afecte negativamente su rendimiento o su disponibilidad. Esto se logra mediante la posibilidad de agregar más recursos (como servidores) para distribuir la carga, lo que se conoce como escalabilidad horizontal.
+
+<br>
+En casos de aumento considerable de trafico, en lugar de intentar hacer que un solo servidor Redis haga todo el trabajo, puedes optar por escalar Redis horizontalmente.
+
+<br>
+Para hacerlo, se puede agregar más servidores Redis a tu entorno. Estos nuevos servidores trabajan en conjunto y distribuyen la carga de manera equitativa. Cada servidor maneja una parte de los productos o datos, y cuando un usuario realiza una solicitud, puede dirigirse a cualquiera de los servidores. Esto distribuye la carga de manera uniforme y garantiza que cada servidor Redis pueda responder rápidamente a las solicitudes.
+
+<br>
+
+## Operaciones Atómicas en Redis:
+
+Las operaciones atómicas en Redis son operaciones que se realizan de manera indivisible e inmutable, lo que significa que no se pueden dividir en pasos más pequeños y garantizan que se ejecutarán completamente o no se ejecutarán en absoluto. Redis proporciona una serie de operaciones atómicas que son esenciales para garantizar la consistencia de los datos en entornos de concurrencia.
+
+<ol>
+<li>
+<b>SET</b>: La operación <b>SET</b> se utiliza para establecer el valor de una clave en Redis. Es una operación atómica en el sentido de que reemplaza el valor existente de la clave con el nuevo valor proporcionado. Si la clave ya existe, el valor anterior se sobrescribe por completo.
+Ejemplo:
+
+</li>
+<br>
+<li>
+<b>GETSET</b>: La operación <b>GETSET</b> se utiliza para establecer un nuevo valor y obtener el valor anterior de una clave en una sola operación. Esto es útil cuando necesitas actualizar una clave y, al mismo tiempo, obtener el valor anterior.</li>
+<br>
+<li>
+<b>INCR</b> e <b>INCRBY</b>: Las operaciones <b>INCR</b> e <b>INCRBY</b> se utilizan para incrementar el valor de una clave numérica en 1 o una cantidad específica, respectivamente. Estas operaciones son atómicas y garantizan que el valor se incremente sin posibles condiciones de carrera.
+</li>
+<br>
+<li>
+<b>DECR</b> y <b>DECRBY</b>: Estas operaciones son similares a <b>INCR</b> e <b>INCRBY</b>, pero disminuyen el valor en lugar de aumentarlo.
+</li>
+<br>
+<li>
+<b>APPEND</b>: La operación <b>APPEND</b> se utiliza para concatenar un valor a una clave de tipo cadena. Es una operación atómica que garantiza que la cadena se modifique sin problemas.
+</li>
+<br>
+<li>
+<b>HSET</b>: La operación <b>HSET</b> se utiliza para establecer el valor de un campo en un hash. Es una operación atómica que modifica o crea el campo en el hash.
+</li>
+<br>
+<li>
+<b>LPUSH</b> y <b>RPUSH</b>: Las operaciones <b>LPUSH</b> y <b>RPUSH</b> se utilizan para agregar un elemento al principio (izquierda) o al final (derecha) de una lista, respectivamente. Son operaciones atómicas que garantizan la integridad de la lista.
+</li>
+<br>
+<li>
+<b>SADD</b> y <b>SREM</b>: Las operaciones <b>SADD</b> y <b>SREM</b> se utilizan para agregar o eliminar miembros de un conjunto. Son operaciones atómicas que modifican el conjunto de manera segura.
+</li>
+<br>
+<li>
+<b>ZADD</b> y <b>ZREM</b>: Las operaciones <b>ZADD</b> y <b>ZREM</b> se utilizan para agregar o eliminar elementos de un conjunto ordenado. Al igual que con otros tipos de conjuntos, estas operaciones son atómicas.
+</li>
+<br>
+<li>
+<b>BITOP</b>: La operación <b>BITOP</b> se utiliza para realizar operaciones a nivel de bits en cadenas binarias. A pesar de su naturaleza de operación de bits, es una operación atómica.
+</li>
+</ol>
+<br>
+<div style="background-color: lightgray; padding: 20px;">
+  Estas operaciones son fundamentales para garantizar la consistencia de los datos en Redis en entornos de concurrencia. Puedes utilizar estas operaciones para realizar cambios en los datos de manera segura y sin preocuparte por conflictos
+</div>
+
+<hr>
+
+# Instalacion de Redis:
+
+## Linux
+
+Se puede instalar versiones estables recientes de Redis desde el repositorio APT oficial packages.redis.io.
+
+Si estás ejecutando una distribución mínima (como un Docker), es posible que primero necesite instalar lsb-release, curl y gpg:
+
+- sudo apt install lsb-release curl gpg
+
+Agregue el repositorio al apt index, actualícelo y luego instale:
+
+- curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+- echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+- sudo apt-get update
+- sudo apt-get install redis
+
+En linux tambien podes instalar redis vía Snapcraft:
+
+- sudo snap install redis
+
+Si no tenesSnapcraft lo podes instalar desde el siguiente link:
+https://snapcraft.io/snapcraft
+
+
+## Windows:
+
+En windows es más complicado ya que no es compatible, para poder tenerlo en windows tenes que descargar WSL2 (Windows Subsystem for Linux). WSL2 como dice el nombre básicamente te permite abrir la consola de linux. 
+
+
+Una vez que tenemos WSL2 funcionando lo instalamos de la misma manera que en linux.
+
+<hr>
+
+# Conexion a redis:
+
+## Selección del Cliente:
+<ul>
+En primer lugar, debes seleccionar un cliente Redis adecuado para tu lenguaje de programación. Redis tiene una amplia variedad de clientes disponibles, lo que facilita la integración con tu aplicación.
+</ul>
 
 <div style="background-color: lightblue; padding: 20px;">
   <p>Section with a light blue background.</p>
