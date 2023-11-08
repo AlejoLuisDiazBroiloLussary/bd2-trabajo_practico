@@ -149,15 +149,19 @@ Redis es una base de datos en memoria que funciona almacenando datos en la RAM p
     <li>
     El bucle de eventos de Redis, también conocido como bucle principal, comienza a ejecutarse. Este bucle consta de dos fases principales: una fase de espera de eventos y una fase de procesamiento de eventos.
     </li>
+    <br>
     <li>
     El bucle de eventos se bloquea y espera a que ocurran eventos en las conexiones de clientes, como datos disponibles para lectura o capacidad de escritura en los sockets.
     </li>
+    <br>
     <li>
     Una vez que ocurre un evento, el bucle de eventos desbloquea y procesa el evento. Puede ser una solicitud de cliente para escribir datos, una solicitud para leer datos o incluso un nuevo cliente que intenta conectarse.  La clave del multiplexing en Redis es que las operaciones de lectura y escritura en las conexiones se realizan de manera no bloqueante. Esto significa que el hilo no se bloquea esperando una operación de E/S para completarse, el hilo pasa a la siguiente conexión para atender otros eventos.
     </li>
+    <br>
     <li>
     Cuando se realiza una solicitud, Redis procesa la solicitud y envía la respuesta al cliente. Esto puede incluir la recuperación de datos, actualizaciones en la base de datos en memoria de Redis, o cualquier otra operación específica del cliente.
     </li>
+    <br>
     <li>
     Una vez que se ha atendido un evento, el bucle de eventos repite el proceso de espera y procesamiento, manejando múltiples conexiones de forma concurrente.
     </li>
@@ -166,11 +170,21 @@ Redis es una base de datos en memoria que funciona almacenando datos en la RAM p
   
   </ul>
   </li>
-</ul>
-<div style="background-color: lightgray; padding: 20px;">
+  <br>
+  <div style="background-color: lightgray; padding: 20px;">
   Una cosa a tener en cuenta del “single threading” es que no se explota toda la potencia del procesador, por lo que es práctica común el tener varias instancias de redis siendo procesadas en distintos núcleos.
-
 </div>
+<br>
+<li>
+Estructura de data eficiente:
+<ul>
+  <li>
+  Debido a que redis es una base de datos almacenada en la memoria este se puede aprovechar de varias “low-level” estructuras de datos sin tener que preocuparnos de pasarlas al disco de manera eficiente (como los datos están almacenados en la memoria, no se tiene que tener las mismas consideraciones que con el disco). algunos ejemplos de estas estructuras serían:
+  </li>
+</ul>
+</li>
+</ul>
+
 
 ## algo mas
 
