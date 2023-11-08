@@ -24,10 +24,25 @@
 - [Introduccion](#Intro)
   -  [¿Qué es redis?](#que)
   -  [¿Para qué se usa?](#para_que)
-  -  [Ventajas de usar Redis](#ventajas)
-  -  [Desventajas de usar Redis:](#desventajas)
-- [Page 2](#page2)
-- [Page 3](#page3)
+  -  [ventajas y desventajas](#ventajas)
+  -  [¿Quienes usan Redis?](#quienes)
+- [¿Como funciona Redis?](#como)
+  -  [Fundamentos Basicos](#basicos)
+  -  [Escalabilidad](#escalabilidad)
+  -  [Operaciones Atomicas en Redis](#atomicas)
+-  [Intalacion de Redis](#instalacion)
+   - [Linux](#linux)
+   - [Windows](#windows)
+-  [Conexión a Redis](#conexion)
+-  [Ejemplios de conexiones en distintos lenguajes](#conexion_lenguajes)
+   -  [Python](#python)
+   -  [JavaScript](#javascript)
+-  [Tipos de datos en redis](#tipos_datos)
+
+
+
+
+
 
 <hr>
 
